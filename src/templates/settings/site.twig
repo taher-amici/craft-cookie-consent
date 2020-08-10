@@ -1,4 +1,9 @@
 {% extends "cookie-consent/settings/_layout.twig" %}
+{% set tabs = {
+    "general": {label: "General Settings"|t('cookie-consent'), url: "#general"},
+    "advanced": {label: "Advanced Settings"|t('cookie-consent'), url: "#advanced"},
+} %}
 {% block content %}
-    {% include "cookie-consent/settings/_includes/site_settings.twig" %}
+    {% include "cookie-consent/settings/_includes/site_settings_general.twig" %}
+    {% include "cookie-consent/settings/_includes/site_settings_advanced.twig" %}
 {% endblock %}

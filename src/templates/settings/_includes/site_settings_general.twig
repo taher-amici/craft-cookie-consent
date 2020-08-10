@@ -4,6 +4,7 @@
 <input type="hidden" name="site_id" value="{{ currentSiteId }}">
 
 {{ csrfInput() }}
+<div id="general">
 
 {{ forms.lightswitchField({
     label: model.getAttributeLabel('activated'),
@@ -137,4 +138,6 @@
             errors: model.getErrors("refresh_time"),
         }) }}
     </div>
+</div>
+
 </div>
