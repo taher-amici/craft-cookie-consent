@@ -1,5 +1,11 @@
 # Release Notes for Cookie Consent
 
+## 1.5.0 - 2020-08-10
+
+### Enhancements
+- Added advanced settings for site settings
+
+
 ## 1.4.4 - 2020-07-22
 
 ### Bugfix
