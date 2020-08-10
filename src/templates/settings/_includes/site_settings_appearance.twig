@@ -1,0 +1,11 @@
+{% import "_includes/forms" as forms %}
+<div id="appearance" class="hidden">
+    {{ forms.lightswitchField({
+        label: model.getAttributeLabel('showCheckboxes'),
+        instructions: 'Show checkboxes before the user clicks "Details".'|t('cookie-consent'),
+        name: "showCheckboxes",
+        disabled: not canUpdate,
+        on: model.showCheckboxes,
+        errors: model.getErrors("showCheckboxes"),
+    }) }}
+</div>

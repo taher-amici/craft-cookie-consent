@@ -1,6 +1,49 @@
 {% import "_includes/forms" as forms %}
-<div id="advanced">
-<input type="hidden" name="action" value="cookie-consent/settings/save-site-settings">
-<input type="hidden" name="site_id" value="{{ currentSiteId }}">
-<h2>Advanced</h2>
+<div id="advanced" class="hidden">
+    {{ forms.lightswitchField({
+        label: model.getAttributeLabel('cssAssets'),
+        instructions: 'Load plugin default CSS assets. Turn this off if you provide the CSS logic in your own files.'|t('cookie-consent'),
+        name: "cssAssets",
+        disabled: not canUpdate,
+        on: model.cssAssets,
+        errors: model.getErrors("cssAssets"),
+    }) }}
+
+    {{ forms.lightswitchField({
+        label: model.getAttributeLabel('jsAssets'),
+        instructions: 'Load plugin default JS assets. Turn this off if you provide the Javascript logic in your own files.'|t('cookie-consent'),
+        name: "jsAssets",
+        disabled: not canUpdate,
+        on: model.jsAssets,
+        errors: model.getErrors("jsAssets"),
+    }) }}
+
+    {{ forms.lightswitchField({
+        label: model.getAttributeLabel('templateAsset'),
+        instructions: 'Load the banner template. Turn this off if you provide markup for the banner in your own files.'|t('cookie-consent'),
+        name: "templateAsset",
+        disabled: not canChangeTemplate,
+        on: model.templateAsset,
+        errors: model.getErrors("templateAsset"),
+    }) }}
+
+    {{ forms.textField({
+        label: model.getAttributeLabel('template'),
+        instructions: 'The banner template. Defaults to "cookie-consent/banner".'|t('cookie-consent'),
+        id: "template",
+        name: "template",
+        disabled: not canChangeTemplate,
+        value: model.template,
+        errors: model.getErrors("template"),
+    }) }}
+
+    {{ forms.textField({
+        label: model.getAttributeLabel('cookieName'),
+        instructions: 'The name of the cookie stored in visitors browsers when giving consent. Note: if you change this after visitors have given consent, they will need to give the consent again.'|t('cookie-consent'),
+        id: "cookieName",
+        name: "cookieName",
+        disabled: not canUpdate,
+        value: model.cookieName,
+        errors: model.getErrors("cookieName"),
+    }) }}
 </div>

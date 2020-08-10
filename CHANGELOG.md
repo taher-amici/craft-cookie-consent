@@ -2,7 +2,7 @@
 
 ## 1.5.0 - 2020-08-10
 
-### Enhancements
+### Enhancement
 - Added advanced settings for site settings
 
 

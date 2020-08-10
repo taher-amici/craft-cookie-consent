@@ -1,143 +1,72 @@
 {% import "_includes/forms" as forms %}
-
-<input type="hidden" name="action" value="cookie-consent/settings/save-site-settings">
-<input type="hidden" name="site_id" value="{{ currentSiteId }}">
-
-{{ csrfInput() }}
 <div id="general">
+    {{ forms.lightswitchField({
+        label: model.getAttributeLabel('activated'),
+        instructions: 'Activate the cookie consent banner for all visitors.'|t('cookie-consent'),
+        name: "activated",
+        disabled: not canActivate,
+        on: model.activated,
+        errors: model.getErrors("activated"),
+    }) }}
 
-{{ forms.lightswitchField({
-    label: model.getAttributeLabel('activated'),
-    instructions: 'Activate the cookie consent banner for all visitors.'|t('cookie-consent'),
-    name: "activated",
-    disabled: not canActivate,
-    on: model.activated,
-    errors: model.getErrors("activated"),
-}) }}
+    {{ forms.lightswitchField({
+        label: model.getAttributeLabel('acceptAllButton'),
+        instructions: 'Add an Accept All button that accepts all cookie groups regardless of the checkboxes.'|t('cookie-consent'),
+        name: "acceptAllButton",
+        disabled: not canUpdate,
+        on: model.acceptAllButton,
+        errors: model.getErrors("acceptAllButton"),
+    }) }}
 
-{{ forms.lightswitchField({
-    label: model.getAttributeLabel('cssAssets'),
-    instructions: 'Load plugin default CSS assets.'|t('cookie-consent'),
-    name: "cssAssets",
-    disabled: not canUpdate,
-    on: model.cssAssets,
-    errors: model.getErrors("cssAssets"),
-}) }}
+    {{ forms.textField({
+        label: model.getAttributeLabel('headline'),
+        id: "headline",
+        name: "headline",
+        disabled: not canUpdate,
+        value: model.headline,
+        errors: model.getErrors("headline"),
+    }) }}
 
-{{ forms.lightswitchField({
-    label: model.getAttributeLabel('jsAssets'),
-    instructions: 'Load plugin default JS assets.'|t('cookie-consent'),
-    name: "jsAssets",
-    disabled: not canUpdate,
-    on: model.jsAssets,
-    errors: model.getErrors("jsAssets"),
-}) }}
+    {{ forms.textAreaField({
+        id: "description",
+        name: "description",
+        disabled: not canUpdate,
+        rows: 4,
+        value: model.description,
+        errors: model.getErrors("description"),
+    }) }}
 
-{{ forms.lightswitchField({
-    label: model.getAttributeLabel('acceptAllButton'),
-    instructions: 'Add an Accept All button that accepts all cookie groups regardless of the checkboxes.'|t('cookie-consent'),
-    name: "acceptAllButton",
-    disabled: not canUpdate,
-    on: model.acceptAllButton,
-    errors: model.getErrors("acceptAllButton"),
-}) }}
+    {{ forms.lightswitchField({
+        label: model.getAttributeLabel('showAfterConsent'),
+        instructions: 'Show a small box in the corner for users to update consent settings.'|t('cookie-consent'),
+        name: "showAfterConsent",
+        disabled: not canUpdate,
+        on: model.showAfterConsent,
+        errors: model.getErrors("showAfterConsent"),
+    }) }}
 
-{{ forms.lightswitchField({
-    label: model.getAttributeLabel('templateAsset'),
-    instructions: 'Load template.'|t('cookie-consent'),
-    name: "templateAsset",
-    disabled: not canChangeTemplate,
-    on: model.templateAsset,
-    errors: model.getErrors("templateAsset"),
-}) }}
-
-{{ forms.textField({
-    label: model.getAttributeLabel('template'),
-    instructions: 'The banner template. Defaults to "cookie-consent/banner".'|t('cookie-consent'),
-    id: "template",
-    name: "template",
-    disabled: not canChangeTemplate,
-    value: model.template,
-    errors: model.getErrors("template"),
-}) }}
-
-{{ forms.textField({
-    label: model.getAttributeLabel('cookieName'),
-    instructions: 'The name of the cookie stored in visitors browsers when giving consent.'|t('cookie-consent'),
-    id: "cookieName",
-    name: "cookieName",
-    disabled: not canUpdate,
-    value: model.cookieName,
-    errors: model.getErrors("cookieName"),
-}) }}
-
-{{ forms.textField({
-    label: model.getAttributeLabel('headline'),
-    id: "headline",
-    name: "headline",
-    disabled: not canUpdate,
-    value: model.headline,
-    errors: model.getErrors("headline"),
-}) }}
-
-{{ forms.textAreaField({
-    id: "description",
-    name: "description",
-    disabled: not canUpdate,
-    rows: 4,
-    value: model.description,
-    errors: model.getErrors("description"),
-}) }}
-
-{{ forms.lightswitchField({
-    label: model.getAttributeLabel('showCheckboxes'),
-    instructions: 'Show checkboxes before the user clicks "Details".'|t('cookie-consent'),
-    name: "showCheckboxes",
-    disabled: not canUpdate,
-    on: model.showCheckboxes,
-    errors: model.getErrors("showCheckboxes"),
-}) }}
-
-{{ forms.lightswitchField({
-    label: model.getAttributeLabel('showAfterConsent'),
-    instructions: 'Show a small box in the corner for users to update consent settings.'|t('cookie-consent'),
-    name: "showAfterConsent",
-    disabled: not canUpdate,
-    on: model.showAfterConsent,
-    errors: model.getErrors("showAfterConsent"),
-}) }}
-
-{{ forms.lightswitchField({
-    label: model.getAttributeLabel('showAfterConsent'),
-    instructions: 'Show a small box in the corner for users to update consent settings.'|t('cookie-consent'),
-    name: "showAfterConsent",
-    disabled: not canUpdate,
-    on: model.showAfterConsent,
-    errors: model.getErrors("showAfterConsent"),
-}) }}
-
-<div class="field">
-    <div style="padding-right: 5%; display: inline-block; width: 45%;">
-        {{ forms.lightswitchField({
-            label: model.getAttributeLabel('refresh'),
-            instructions: 'Refresh the site after a user accepts or updates their cookie consent.'|t('cookie-consent'),
-            name: "refresh",
-            disabled: not canUpdate,
-            on: model.refresh,
-            errors: model.getErrors("refresh"),
-        }) }}
+    <div class="field">
+        <div style="padding-right: 5%; display: inline-block; width: 45%;">
+            {{ forms.lightswitchField({
+                label: model.getAttributeLabel('refresh'),
+                instructions: 'Refresh the site after a user accepts or updates their cookie consent.'|t('cookie-consent'),
+                name: "refresh",
+                disabled: not canUpdate,
+                on: model.refresh,
+                errors: model.getErrors("refresh"),
+            }) }}
+        </div>
+        <div style="display: inline-block; width: 45%;">
+            {{ forms.textField({
+                label: model.getAttributeLabel('refresh_time'),
+                instructions: 'Delay in milliseconds before the refresh.'|t('cookie-consent'),
+                id: "refresh_time",
+                name: "refresh_time",
+                disabled: not canUpdate,
+                value: model.refresh_time,
+                errors: model.getErrors("refresh_time"),
+            }) }}
+        </div>
     </div>
-    <div style="display: inline-block; width: 45%;">
-        {{ forms.textField({
-            label: model.getAttributeLabel('refresh_time'),
-            instructions: 'Delay in milliseconds before the refresh.'|t('cookie-consent'),
-            id: "refresh_time",
-            name: "refresh_time",
-            disabled: not canUpdate,
-            value: model.refresh_time,
-            errors: model.getErrors("refresh_time"),
-        }) }}
-    </div>
-</div>
 
 </div>

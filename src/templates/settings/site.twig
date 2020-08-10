@@ -1,9 +1,15 @@
 {% extends "cookie-consent/settings/_layout.twig" %}
 {% set tabs = {
     "general": {label: "General Settings"|t('cookie-consent'), url: "#general"},
+    "appearance": {label: "Appearance"|t('cookie-consent'), url: "#appearance"},
     "advanced": {label: "Advanced Settings"|t('cookie-consent'), url: "#advanced"},
 } %}
 {% block content %}
+    <input type="hidden" name="action" value="cookie-consent/settings/save-site-settings">
+    <input type="hidden" name="site_id" value="{{ currentSiteId }}">
+
+    {{ csrfInput() }}
     {% include "cookie-consent/settings/_includes/site_settings_general.twig" %}
+    {% include "cookie-consent/settings/_includes/site_settings_appearance.twig" %}
     {% include "cookie-consent/settings/_includes/site_settings_advanced.twig" %}
 {% endblock %}
