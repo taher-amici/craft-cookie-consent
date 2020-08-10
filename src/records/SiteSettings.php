@@ -6,6 +6,7 @@ namespace elleracompany\cookieconsent\records;
 use Craft;
 use craft\db\ActiveRecord;
 use craft\records\Site;
+use elleracompany\cookieconsent\banners\Standard;
 use elleracompany\cookieconsent\CookieConsent;
 use yii\db\ActiveQueryInterface;
 use yii\web\NotFoundHttpException;
@@ -22,9 +23,10 @@ use yii\web\NotFoundHttpException;
  * @property string     $cookieName
  * @property string 	$headline
  * @property string 	$description
- * @property string		$template
  * @property integer 	$site_id
  * @property integer    $refresh_time
+ * @property string		$template_class
+ * @property string     $template_settings
  */
 class SiteSettings extends ActiveRecord
 {
@@ -43,11 +45,12 @@ class SiteSettings extends ActiveRecord
             'cookieName',
 			'headline',
 			'description',
-			'template',
 			'templateAsset',
             'acceptAllButton',
             'refresh',
-            'refresh_time'
+            'refresh_time',
+            'template_class',
+            'template_settings'
 		];
 		return array_merge($fields, parent::fields());
 	}
@@ -66,8 +69,8 @@ class SiteSettings extends ActiveRecord
 	public function rules()
 	{
 		return [
-			[['headline', 'description', 'template', 'cookieName'], 'string'],
-			[['headline', 'description', 'template'], 'required'],
+			[['headline', 'description', 'cookieName', 'template_class', 'template_settings'], 'string'],
+			[['headline', 'description', 'template_class'], 'required'],
 			[['activated', 'cssAssets', 'jsAssets', 'templateAsset', 'showCheckboxes', 'showAfterConsent', 'acceptAllButton', 'refresh'], 'boolean'],
 			[['activated', 'headline', 'description', 'template', 'templateAsset', 'showCheckboxes', 'showAfterConsent'], 'validatePermission'],
 			[['activated', 'acceptAllButton', 'refresh'], 'default', 'value' => 0],
@@ -93,11 +96,20 @@ class SiteSettings extends ActiveRecord
             'cookieName' => Craft::t('cookie-consent', 'Name of the consent cookie'),
             'acceptAllButton' => Craft::t('cookie-consent', 'Add "Accept All" button'),
 			'description' => Craft::t('cookie-consent', 'Description'),
-			'template' => Craft::t('cookie-consent', 'Template'),
             'refresh' => Craft::t('cookie-consent', 'Automatic Refresh'),
-            'refresh_time' => Craft::t('cookie-consent', 'Refresh Time')
+            'refresh_time' => Craft::t('cookie-consent', 'Refresh Time'),
+            'template_class' => Craft::t('cookie-consent', 'Template Class'),
+            'template_settings' => Craft::t('cookie-consent', 'Template Settings')
 		];
 	}
+
+	public function getBanners()
+    {
+        // TODO: Load this into a dropdown
+        return [
+            Standard::class => Standard::templateName()
+        ];
+    }
 
     /**
      * @return array
@@ -112,8 +124,9 @@ class SiteSettings extends ActiveRecord
 			'showAfterConsent' => 'cookie-consent:site-settings:content',
             'cookieName' => 'cookie-consent:site-settings:content',
             'acceptAllButton' => 'cookie-consent:site-settings:content',
-			'template' => 'cookie-consent:site-settings:template',
-			'templateAsset' => 'cookie-consent:site-settings:template'
+			'templateAsset' => 'cookie-consent:site-settings:template',
+			'template_class' => 'cookie-consent:site-settings:template',
+            'template_settings' => 'cookie-consent:site-settings:template'
 		];
 	}
 

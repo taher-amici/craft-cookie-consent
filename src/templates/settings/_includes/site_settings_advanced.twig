@@ -28,16 +28,6 @@
     }) }}
 
     {{ forms.textField({
-        label: model.getAttributeLabel('template'),
-        instructions: 'The banner template. Defaults to "cookie-consent/banner".'|t('cookie-consent'),
-        id: "template",
-        name: "template",
-        disabled: not canChangeTemplate,
-        value: model.template,
-        errors: model.getErrors("template"),
-    }) }}
-
-    {{ forms.textField({
         label: model.getAttributeLabel('cookieName'),
         instructions: 'The name of the cookie stored in visitors browsers when giving consent. Note: if you change this after visitors have given consent, they will need to give the consent again.'|t('cookie-consent'),
         id: "cookieName",
