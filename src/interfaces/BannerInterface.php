@@ -2,7 +2,7 @@
 
 namespace elleracompany\cookieconsent\interfaces;
 
-interface TemplateTypeInterface
+interface BannerInterface
 {
     /**
      * Template Type Name
@@ -10,4 +10,6 @@ interface TemplateTypeInterface
      * @return string
      */
     public static function templateName(): string;
+    public static function templateSlug(): string;
+    public static function settingsModel(): BannerSettingsModelInterface;
 }

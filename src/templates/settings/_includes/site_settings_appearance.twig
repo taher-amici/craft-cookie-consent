@@ -3,8 +3,19 @@
     {{ forms.selectField({
         label: model.getAttributeLabel('template_class'),
         name: "template_class",
-        options: model.getBanners(),
+        options: model.getBanners().dropdown,
         value: model.template_class,
         errors: model.getErrors("template_class"),
     }) }}
+    <!--
+
+    Need to dynamically load settings based on chosen template
+
+    -->
+    {{ dump(model.getBanners().classes) }}
+    {% for class in model.getBanners().classes %}
+        <H1>HER</H1>
+        {{ class.settingsModel.getSettingsHtml() }}
+    {% endfor %}
+
 </div>

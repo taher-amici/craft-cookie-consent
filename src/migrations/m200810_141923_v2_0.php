@@ -71,7 +71,7 @@ class m200810_141923_v2_0 extends Migration
         $this->addColumn(
             CookieConsent::SITE_SETTINGS_TABLE,
             'template_class',
-            $this->string()->defaultValue('elleracompany\cookieconsent\banners\standard\Template')
+            $this->string()->defaultValue('elleracompany\cookieconsent\banners\standard\Banner')
         );
 
         $this->addColumn(
@@ -83,7 +83,7 @@ class m200810_141923_v2_0 extends Migration
         foreach ($siteSettings as $settings)
         {
             $settingsModel = new Settings();
-            $settingsModel->load($settings);
+            $settingsModel->loadDataArray($settings);
             $siteSetting = SiteSettings::findOne($settings['site_id']);
             $siteSetting->template_settings = serialize($settingsModel);
             $siteSetting->save();

@@ -3,9 +3,9 @@ namespace elleracompany\cookieconsent;
 
 use Craft;
 use craft\web\View;
-use elleracompany\cookieconsent\banners\standard\Template;
+use elleracompany\cookieconsent\banners\standard\Banner;
 use elleracompany\cookieconsent\events\RegisterBannerTemplatesEvent;
-use elleracompany\cookieconsent\interfaces\TemplateTypeInterface;
+use elleracompany\cookieconsent\interfaces\BannerInterface;
 use elleracompany\cookieconsent\services\Variables;
 use yii\base\Event;
 use craft\web\UrlManager;
@@ -178,7 +178,7 @@ class CookieConsent extends \craft\base\Plugin
             self::class,
             self::EVENT_REGISTER_BANNER_TEMPLATES,
             function(RegisterBannerTemplatesEvent $e) {
-                $e->addClass(Template::class);
+                $e->addClass(Banner::class);
             }
         );
 
@@ -201,17 +201,18 @@ class CookieConsent extends \craft\base\Plugin
 
     public function getBannerTemplates()
     {
-        $selectArray = [];
+        $array = [];
         foreach ($this->bannerTemplates as $templateClassName)
         {
-            /** @var $class TemplateTypeInterface */
+            /** @var $class BannerInterface */
             $class = new $templateClassName;
-            $selectArray[] = [
+            $array['dropdown'][] = [
                 'label' => $class->templateName(),
                 'value' => $templateClassName
             ];
+            $array['classes'][] = $class;
         }
-        return $selectArray;
+        return $array;
     }
 
 	/**
