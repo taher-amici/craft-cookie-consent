@@ -1,10 +1,10 @@
 <?php
 
-namespace elleracompany\cookieconsent\banners;
+namespace elleracompany\cookieconsent\banners\standard;
 
 use elleracompany\cookieconsent\interfaces\TemplateTypeInterface;
 
-class Standard implements TemplateTypeInterface
+class Template implements TemplateTypeInterface
 {
     public static function templateName(): string
     {

@@ -6,6 +6,7 @@ use Craft;
 use craft\models\Site;
 use craft\web\Controller;
 use elleracompany\cookieconsent\CookieConsent;
+use elleracompany\cookieconsent\events\RegisterBannerTemplatesEvent;
 use elleracompany\cookieconsent\records\Consent;
 use elleracompany\cookieconsent\records\CookieGroup;
 use elleracompany\cookieconsent\records\SiteSettings;
@@ -42,10 +43,12 @@ class SettingsController extends Controller
 		$this->requirePermission('cookie-consent:site-settings');
 
 		Craft::$app->getRequest();
+
 		$variables = [
 			'currentSiteHandle' => $siteHandle,
 			'model' => $model
 		];
+
 		$this->_prepVariables($variables);
 		$variables['currentPage'] = 'site';
 		$variables['title'] = Craft::t('cookie-consent', 'Site Settings');

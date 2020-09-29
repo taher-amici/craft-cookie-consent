@@ -3,6 +3,9 @@ namespace elleracompany\cookieconsent;
 
 use Craft;
 use craft\web\View;
+use elleracompany\cookieconsent\banners\standard\Template;
+use elleracompany\cookieconsent\events\RegisterBannerTemplatesEvent;
+use elleracompany\cookieconsent\interfaces\TemplateTypeInterface;
 use elleracompany\cookieconsent\services\Variables;
 use yii\base\Event;
 use craft\web\UrlManager;
@@ -54,6 +57,11 @@ class CookieConsent extends \craft\base\Plugin
 	 * Default banner description
 	 */
 	const DEFAULT_DESCRIPTION = 'We use cookies to personalize content and ads, and to analyze our traffic and improve our service.';
+
+    /**
+     * List template event
+     */
+    const EVENT_REGISTER_BANNER_TEMPLATES = 'eventRegisterBannerTemplates';
 
 	/**
 	 * Default cookie groups
@@ -133,6 +141,9 @@ class CookieConsent extends \craft\base\Plugin
 	 */
 	public $schemaVersion = '1.5.0';
 
+
+    private $bannerTemplates = [];
+
 	// Public Methods
 	// =========================================================================
 
@@ -163,6 +174,14 @@ class CookieConsent extends \craft\base\Plugin
             __METHOD__
         );
 
+        Event::on(
+            self::class,
+            self::EVENT_REGISTER_BANNER_TEMPLATES,
+            function(RegisterBannerTemplatesEvent $e) {
+                $e->addClass(Template::class);
+            }
+        );
+
 		if(!Craft::$app->request->isCpRequest && !Craft::$app->request->isConsoleRequest) {
 			if($this->cookieConsent->render()) {
 				$this->cookieConsent->loadCss();
@@ -174,6 +193,29 @@ class CookieConsent extends \craft\base\Plugin
 		}
 		else $this->installCpEventListeners();
 	}
+
+	public function addBannerTemplate(string $class)
+    {
+        $this->bannerTemplates[] = $class;
+    }
+
+    public function getBannerTemplates()
+    {
+        $selectArray = [
+            'label' => 'Use default',
+            'value' => null
+        ];
+        foreach ($this->bannerTemplates as $templateClassName)
+        {
+            /** @var $class TemplateTypeInterface */
+            $class = new $templateClassName;
+            $selectArray[] = [
+                'label' => $class->templateName(),
+                'value' => $templateClassName
+            ];
+        }
+        return $selectArray;
+    }
 
 	/**
 	 * @inheritdoc

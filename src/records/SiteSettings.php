@@ -8,6 +8,7 @@ use craft\db\ActiveRecord;
 use craft\records\Site;
 use elleracompany\cookieconsent\banners\Standard;
 use elleracompany\cookieconsent\CookieConsent;
+use elleracompany\cookieconsent\events\RegisterBannerTemplatesEvent;
 use yii\db\ActiveQueryInterface;
 use yii\web\NotFoundHttpException;
 
@@ -49,6 +50,7 @@ class SiteSettings extends ActiveRecord
             'acceptAllButton',
             'refresh',
             'refresh_time',
+            'template',
             'template_class',
             'template_settings'
 		];
@@ -69,7 +71,7 @@ class SiteSettings extends ActiveRecord
 	public function rules()
 	{
 		return [
-			[['headline', 'description', 'cookieName', 'template_class', 'template_settings'], 'string'],
+			[['headline', 'description', 'cookieName', 'template_class', 'template_settings', 'template'], 'string'],
 			[['headline', 'description', 'template_class'], 'required'],
 			[['activated', 'cssAssets', 'jsAssets', 'templateAsset', 'showCheckboxes', 'showAfterConsent', 'acceptAllButton', 'refresh'], 'boolean'],
 			[['activated', 'headline', 'description', 'template', 'templateAsset', 'showCheckboxes', 'showAfterConsent'], 'validatePermission'],
@@ -105,10 +107,14 @@ class SiteSettings extends ActiveRecord
 
 	public function getBanners()
     {
-        // TODO: Load this into a dropdown
-        return [
-            Standard::class => Standard::templateName()
-        ];
+        $plugin = CookieConsent::getInstance();
+
+        $plugin->trigger(
+            CookieConsent::EVENT_REGISTER_BANNER_TEMPLATES,
+            new RegisterBannerTemplatesEvent()
+        );
+
+        return $plugin->getBannerTemplates();
     }
 
     /**

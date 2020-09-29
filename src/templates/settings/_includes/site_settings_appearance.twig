@@ -8,4 +8,12 @@
         on: model.showCheckboxes,
         errors: model.getErrors("showCheckboxes"),
     }) }}
+
+    {{ forms.selectField({
+        label: model.getAttributeLabel('template_class'),
+        name: "template_class",
+        options: model.getBanners(),
+        on: model.template_class,
+        errors: model.getErrors("template_class"),
+    }) }}
 </div>
