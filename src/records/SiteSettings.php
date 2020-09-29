@@ -72,7 +72,7 @@ class SiteSettings extends ActiveRecord
 	{
 		return [
 			[['headline', 'description', 'cookieName', 'template_class', 'template_settings', 'template'], 'string'],
-			[['headline', 'description', 'template_class'], 'required'],
+			[['headline', 'description', 'template_class', 'template'], 'required'],
 			[['activated', 'cssAssets', 'jsAssets', 'templateAsset', 'showCheckboxes', 'showAfterConsent', 'acceptAllButton', 'refresh'], 'boolean'],
 			[['activated', 'headline', 'description', 'template', 'templateAsset', 'showCheckboxes', 'showAfterConsent'], 'validatePermission'],
 			[['activated', 'acceptAllButton', 'refresh'], 'default', 'value' => 0],
@@ -130,6 +130,7 @@ class SiteSettings extends ActiveRecord
 			'showAfterConsent' => 'cookie-consent:site-settings:content',
             'cookieName' => 'cookie-consent:site-settings:content',
             'acceptAllButton' => 'cookie-consent:site-settings:content',
+            'template' => 'cookie-consent:site-settings:template',
 			'templateAsset' => 'cookie-consent:site-settings:template',
 			'template_class' => 'cookie-consent:site-settings:template',
             'template_settings' => 'cookie-consent:site-settings:template'

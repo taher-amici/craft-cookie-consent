@@ -28,6 +28,7 @@ class Install extends Migration
 				'activated' => $this->boolean()->notNull()->defaultValue(false),
 				'cssAssets' => $this->boolean()->notNull()->defaultValue(true),
 				'jsAssets' => $this->boolean()->notNull()->defaultValue(true),
+                'template' => $this->string()->notNull(),
 				'templateAsset' => $this->boolean()->notNull()->defaultValue(true),
 				'showCheckboxes' => $this->boolean()->notNull()->defaultValue(true),
 				'showAfterConsent' => $this->boolean()->notNull()->defaultValue(true),

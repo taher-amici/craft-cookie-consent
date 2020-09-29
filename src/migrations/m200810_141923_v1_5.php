@@ -25,10 +25,6 @@ class m200810_141923_v1_5 extends Migration
             'template_settings',
             $this->text()
         );
-        $this->dropColumn(
-            CookieConsent::SITE_SETTINGS_TABLE,
-            'template'
-        );
 	}
 	/**
 	 * @inheritdoc
