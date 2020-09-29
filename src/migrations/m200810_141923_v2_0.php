@@ -19,10 +19,10 @@ class m200810_141923_v2_0 extends Migration
 	{
         $siteSettings = (new \craft\db\Query())
             ->select([
-                'id',
+                'site_id',
                 'cssAssets',
                 'jsAssets',
-                'templateAssets',
+                'templateAsset',
                 'showCheckboxes',
                 'showAfterConsent',
                 'acceptAllButton',
@@ -79,11 +79,12 @@ class m200810_141923_v2_0 extends Migration
             'template_settings',
             $this->text()
         );
+
         foreach ($siteSettings as $settings)
         {
             $settingsModel = new Settings();
             $settingsModel->load($settings);
-            $siteSetting = SiteSettings::findOne($settings['id']);
+            $siteSetting = SiteSettings::findOne($settings['site_id']);
             $siteSetting->template_settings = serialize($settingsModel);
             $siteSetting->save();
         }

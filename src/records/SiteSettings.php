@@ -14,16 +14,8 @@ use yii\web\NotFoundHttpException;
 
 /**
  * @property boolean 	$activated
- * @property boolean 	$jsAssets
- * @property boolean 	$cssAssets
- * @property boolean	$templateAsset
- * @property boolean	$showCheckboxes
- * @property boolean	$showAfterConsent
- * @property boolean    $acceptAllButton
  * @property boolean    $refresh
  * @property string     $cookieName
- * @property string 	$headline
- * @property string 	$description
  * @property integer 	$site_id
  * @property integer    $refresh_time
  * @property string		$template_class
@@ -39,18 +31,9 @@ class SiteSettings extends ActiveRecord
 		$fields = [
 			'site_id',
 			'activated',
-			'cssAssets',
-			'jsAssets',
-			'showCheckboxes',
-			'showAfterConsent',
             'cookieName',
-			'headline',
-			'description',
-			'templateAsset',
-            'acceptAllButton',
             'refresh',
             'refresh_time',
-            'template',
             'template_class',
             'template_settings'
 		];
@@ -71,12 +54,11 @@ class SiteSettings extends ActiveRecord
 	public function rules()
 	{
 		return [
-			[['headline', 'description', 'cookieName', 'template_class', 'template_settings', 'template'], 'string'],
-			[['headline', 'description', 'template_class', 'template'], 'required'],
-			[['activated', 'cssAssets', 'jsAssets', 'templateAsset', 'showCheckboxes', 'showAfterConsent', 'acceptAllButton', 'refresh'], 'boolean'],
-			[['activated', 'headline', 'description', 'template', 'templateAsset', 'showCheckboxes', 'showAfterConsent'], 'validatePermission'],
-			[['activated', 'acceptAllButton', 'refresh'], 'default', 'value' => 0],
-			[['cssAssets', 'jsAssets', 'templateAsset'], 'default', 'value' => 1],
+			[['cookieName', 'template_class', 'template_settings'], 'string'],
+			[['template_class'], 'required'],
+			[['activated', 'refresh'], 'boolean'],
+			[['activated'], 'validatePermission'],
+			[['activated', 'refresh'], 'default', 'value' => 0],
 			[['site_id', 'refresh_time'], 'integer']
 		];
 	}
@@ -89,15 +71,7 @@ class SiteSettings extends ActiveRecord
 		return [
 			'site_id' => Craft::t('cookie-consent', 'Site ID'),
 			'activated' => Craft::t('cookie-consent', 'Activated'),
-			'cssAssets' => Craft::t('cookie-consent', 'Load CSS Assets'),
-			'jsAssets' => Craft::t('cookie-consent', 'Load JS Assets'),
-			'templateAsset' => Craft::t('cookie-consent', 'Load Template'),
-			'showCheckboxes' => Craft::t('cookie-consent', 'Show Checkboxes'),
-			'showAfterConsent' => Craft::t('cookie-consent', 'Show after Consent'),
-			'headline' => Craft::t('cookie-consent', 'Headline'),
             'cookieName' => Craft::t('cookie-consent', 'Name of the consent cookie'),
-            'acceptAllButton' => Craft::t('cookie-consent', 'Add "Accept All" button'),
-			'description' => Craft::t('cookie-consent', 'Description'),
             'refresh' => Craft::t('cookie-consent', 'Automatic Refresh'),
             'refresh_time' => Craft::t('cookie-consent', 'Refresh Time'),
             'template_class' => Craft::t('cookie-consent', 'Template Class'),
@@ -124,14 +98,7 @@ class SiteSettings extends ActiveRecord
 	{
 		return [
 			'activated' => 'cookie-consent:site-settings:activate',
-			'headline' => 'cookie-consent:site-settings:content',
-			'description' => 'cookie-consent:site-settings:content',
-			'showCheckboxes' => 'cookie-consent:site-settings:content',
-			'showAfterConsent' => 'cookie-consent:site-settings:content',
             'cookieName' => 'cookie-consent:site-settings:content',
-            'acceptAllButton' => 'cookie-consent:site-settings:content',
-            'template' => 'cookie-consent:site-settings:template',
-			'templateAsset' => 'cookie-consent:site-settings:template',
 			'template_class' => 'cookie-consent:site-settings:template',
             'template_settings' => 'cookie-consent:site-settings:template'
 		];

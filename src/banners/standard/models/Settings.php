@@ -9,7 +9,7 @@ class Settings implements TemplateSettingsModelInterface
 
     public $cssAssets;
     public $jsAssets;
-    public $templateAssets;
+    public $templateAsset;
     public $showCheckboxes;
     public $showAfterConsent;
     public $acceptAllButton;

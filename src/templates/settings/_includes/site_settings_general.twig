@@ -9,42 +9,6 @@
         errors: model.getErrors("activated"),
     }) }}
 
-    {{ forms.lightswitchField({
-        label: model.getAttributeLabel('acceptAllButton'),
-        instructions: 'Add an Accept All button that accepts all cookie groups regardless of the checkboxes.'|t('cookie-consent'),
-        name: "acceptAllButton",
-        disabled: not canUpdate,
-        on: model.acceptAllButton,
-        errors: model.getErrors("acceptAllButton"),
-    }) }}
-
-    {{ forms.textField({
-        label: model.getAttributeLabel('headline'),
-        id: "headline",
-        name: "headline",
-        disabled: not canUpdate,
-        value: model.headline,
-        errors: model.getErrors("headline"),
-    }) }}
-
-    {{ forms.textAreaField({
-        id: "description",
-        name: "description",
-        disabled: not canUpdate,
-        rows: 4,
-        value: model.description,
-        errors: model.getErrors("description"),
-    }) }}
-
-    {{ forms.lightswitchField({
-        label: model.getAttributeLabel('showAfterConsent'),
-        instructions: 'Show a small box in the corner for users to update consent settings.'|t('cookie-consent'),
-        name: "showAfterConsent",
-        disabled: not canUpdate,
-        on: model.showAfterConsent,
-        errors: model.getErrors("showAfterConsent"),
-    }) }}
-
     <div class="field">
         <div style="padding-right: 5%; display: inline-block; width: 45%;">
             {{ forms.lightswitchField({

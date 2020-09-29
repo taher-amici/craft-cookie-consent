@@ -201,10 +201,7 @@ class CookieConsent extends \craft\base\Plugin
 
     public function getBannerTemplates()
     {
-        $selectArray = [
-            'label' => 'Use default',
-            'value' => null
-        ];
+        $selectArray = [];
         foreach ($this->bannerTemplates as $templateClassName)
         {
             /** @var $class TemplateTypeInterface */
