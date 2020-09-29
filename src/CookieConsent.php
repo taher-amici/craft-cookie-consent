@@ -139,7 +139,7 @@ class CookieConsent extends \craft\base\Plugin
 	 *
 	 * @var string
 	 */
-	public $schemaVersion = '1.5.0';
+	public $schemaVersion = '2.0.0';
 
 
     private $bannerTemplates = [];
