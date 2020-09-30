@@ -31,7 +31,6 @@
     label: model.getAttributeLabel('templateAsset'),
     instructions: 'Load template.'|t('cookie-consent'),
     name: "templateAsset",
-    disabled: not canChangeTemplate,
     on: model.templateAsset,
     errors: model.getErrors("templateAsset"),
 }) }}

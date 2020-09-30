@@ -11,5 +11,7 @@ interface BannerInterface
      */
     public static function templateName(): string;
     public static function templateSlug(): string;
+    public static function cpTemplatePath(): string;
+    public static function siteTemplatePath(): string;
     public static function settingsModel(): BannerSettingsModelInterface;
 }

@@ -26,9 +26,9 @@ class Settings extends Model implements BannerSettingsModelInterface
         foreach ($data as $attribute => $value) if(property_exists(self::class, $attribute)) $this->$attribute = $value;
     }
 
-    public static function twigPath(): string
+    public static function settingsTemplate(): string
     {
-        return dirname(__DIR__) . '/templates';
+        return '_settings';
     }
 
     public static function bannerClass(): BannerInterface
@@ -45,6 +45,9 @@ class Settings extends Model implements BannerSettingsModelInterface
      */
     public static function getSettingsHtml()
     {
-        return Craft::$app->view->renderTemplate('_craft_cookie_consent_'.self::bannerClass()::templateSlug().'/_settings', ['model' => new self], View::TEMPLATE_MODE_CP);
+        // TODO: I have no idea how to render a twig template from a folder not contained in cpTemplateRoots
+        // TODO: Without registering the cpTemplateRoot in the beginning of runtime
+        // Craft::$app->view->cpTemplateRoots['_craft_cookie_consent_'.self::bannerClass()::templateSlug()] = self::templatePath();
+        return Craft::$app->view->renderTemplate('_craft_cookie_consent_'.self::bannerClass()::templateSlug(), ['model' => new self], View::TEMPLATE_MODE_CP);
     }
 }

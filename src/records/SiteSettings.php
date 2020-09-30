@@ -6,9 +6,9 @@ namespace elleracompany\cookieconsent\records;
 use Craft;
 use craft\db\ActiveRecord;
 use craft\records\Site;
-use elleracompany\cookieconsent\banners\Standard;
+use craft\web\View;
 use elleracompany\cookieconsent\CookieConsent;
-use elleracompany\cookieconsent\events\RegisterBannerTemplatesEvent;
+use elleracompany\cookieconsent\interfaces\BannerInterface;
 use yii\db\ActiveQueryInterface;
 use yii\web\NotFoundHttpException;
 
@@ -23,6 +23,9 @@ use yii\web\NotFoundHttpException;
  */
 class SiteSettings extends ActiveRecord
 {
+
+    private $banners;
+
 	/**
 	 * @inheritdoc
 	 */
@@ -79,16 +82,35 @@ class SiteSettings extends ActiveRecord
 		];
 	}
 
-	public function getBanners()
+	private function getBanners()
     {
-        $plugin = CookieConsent::getInstance();
+        if(!$this->banners)
+        {
+            $plugin = CookieConsent::getInstance();
+            $this->banners = $plugin->getBannerTemplates();
+        }
 
-        $plugin->trigger(
-            CookieConsent::EVENT_REGISTER_BANNER_TEMPLATES,
-            new RegisterBannerTemplatesEvent()
-        );
+        return $this->banners;
+    }
 
-        return $plugin->getBannerTemplates();
+    public function getBannerDropdown()
+    {
+        return $this->getBanners()['dropdown'];
+    }
+
+    public function getBannerList()
+    {
+        return $this->getBanners()['classes'];
+    }
+
+    public function getBannerSettingsHtml($slug)
+    {
+        $banners = $this->getBanners();
+        if(isset($banners['classes'][$slug])) {
+            /** @var $classname BannerInterface */
+            $classname = $banners['classes'][$slug];
+            return Craft::$app->view->renderTemplate('cookie_consent_banner_' . $classname::templateSlug() . '_cp/' . $classname::settingsModel()::settingsTemplate(),['model' => $classname::settingsModel(), 'canUpdate' => true], View::TEMPLATE_MODE_CP);
+        }
     }
 
     /**

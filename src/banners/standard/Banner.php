@@ -22,4 +22,14 @@ class Banner implements BannerInterface
     {
         return new Settings();
     }
+
+    public static function cpTemplatePath(): string
+    {
+        return __DIR__ . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . 'cp';
+    }
+
+    public static function siteTemplatePath(): string
+    {
+        return __DIR__ . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . 'site';
+    }
 }

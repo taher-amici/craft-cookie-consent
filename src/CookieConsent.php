@@ -182,6 +182,11 @@ class CookieConsent extends \craft\base\Plugin
             }
         );
 
+        $this->trigger(
+            CookieConsent::EVENT_REGISTER_BANNER_TEMPLATES,
+            new RegisterBannerTemplatesEvent()
+        );
+
 		if(!Craft::$app->request->isCpRequest && !Craft::$app->request->isConsoleRequest) {
 			if($this->cookieConsent->render()) {
 				$this->cookieConsent->loadCss();
@@ -210,7 +215,7 @@ class CookieConsent extends \craft\base\Plugin
                 'label' => $class->templateName(),
                 'value' => $templateClassName
             ];
-            $array['classes'][] = $class;
+            $array['classes'][$class::templateSlug()] = $class;
         }
         return $array;
     }
